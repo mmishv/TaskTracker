@@ -118,4 +118,5 @@ dmypy.json
 
 cython_debug/
 
-!/frontend/frontend/
+/frontend/frontend/
+
