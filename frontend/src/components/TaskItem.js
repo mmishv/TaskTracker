@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import TaskCard from './TaskCard';
+import { useParams, Link } from 'react-router-dom';
 
 const TaskItem = () => {
   const [task, setTask] = useState(null);
@@ -17,15 +16,30 @@ const TaskItem = () => {
       });
   }, [id]);
 
+  const handleDeleteTask = () => {
+    axios.delete(`/api/tasks/${id}/`)
+      .then(response => {
+        window.location.href = '/tasks';
+      })
+      .catch(error => {
+        console.error('Error deleting task:', error);
+      });
+  };
+
   if (!task) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
-      <TaskCard task={task} />
+      <h1>{task.title}</h1>
+      <p>{task.description}</p>
+      <button onClick={handleDeleteTask}>Delete</button>
+      <br />
+      <Link to="/tasks">Back</Link>
     </div>
   );
 };
 
 export default TaskItem;
+
