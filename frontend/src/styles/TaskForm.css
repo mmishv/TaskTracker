@@ -1,26 +1,30 @@
-.task-form-container {
+.create-form {
   width: 20%;
+  height: max-content;
   padding: 20px;
   border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-right: 20px;
+  margin: 0 20px 0 20px;
   box-sizing: border-box;
+  border-radius: 10px;
 }
 
-.task-form-container form {
-  display: flex;
-  flex-direction: column;
-}
-
-.task-form-container label {
-  margin-bottom: 8px;
-}
-
-.task-form-container input {
-  padding: 8px;
+.create-form h2 {
   margin-bottom: 16px;
 }
 
-.task-form-container button {
+.create-form input {
   padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.create-form button {
+  padding: 8px;
+  background-color: #fff;
+  color: #28a745;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }

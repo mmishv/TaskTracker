@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
+import '../styles/TaskItem.css';
 
 const TaskItem = () => {
   const [task, setTask] = useState(null);
@@ -31,15 +32,21 @@ const TaskItem = () => {
   }
 
   return (
-    <div>
-      <h1>{task.title}</h1>
-      <p>{task.description}</p>
-      <button onClick={handleDeleteTask}>Delete</button>
-      <br />
-      <Link to="/tasks">Back</Link>
+    <div className="task-item-container">
+      <div className="task-card">
+        <h1>{task.title}</h1>
+        <p>{task.description}</p>
+        <div className="timestamps">
+          <p>Created At: {new Date(task.created_at).toLocaleString()}</p>
+          <p>Last Updated: {new Date(task.updated_at).toLocaleString()}</p>
+        </div>
+        <div className="button-container">
+          <button className="delete-button" onClick={handleDeleteTask}>Delete</button>
+          <Link to="/tasks" className="back-button">Back</Link>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default TaskItem;
-
