@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import TaskCard from './TaskCard';
 
 const TaskItem = () => {
   const [task, setTask] = useState(null);
@@ -22,8 +23,7 @@ const TaskItem = () => {
 
   return (
     <div>
-      <h1>{task.title}</h1>
-      <p>{task.description}</p>
+      <TaskCard task={task} />
     </div>
   );
 };
