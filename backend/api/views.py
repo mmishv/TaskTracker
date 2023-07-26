@@ -4,10 +4,11 @@ from .serializers import TaskSerializer
 
 
 class TaskListCreateView(generics.ListCreateAPIView):
-    queryset = Task.objects.all()
+    queryset = Task.objects.using('default').all()
     serializer_class = TaskSerializer
 
 
 class TaskRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Task.objects.all()
+    queryset = Task.objects.using('default').all()
     serializer_class = TaskSerializer
+
