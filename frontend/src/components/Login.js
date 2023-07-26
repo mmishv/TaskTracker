@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../styles/Login.css';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -6,7 +7,7 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await fetch('/api/login/', {
+    const response = await fetch('/auth/login/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -22,20 +23,22 @@ function Login() {
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Email:
-        <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
-      </label>
-      <br />
-      <label>
-        Password:
-        <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required />
-      </label>
-      <br />
-      <button type="submit">Log In</button>
-    </form>
+return (
+    <div className="login-container">
+      <form onSubmit={handleSubmit}>
+        <label>
+          Email:
+          <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
+        </label>
+        <br />
+        <label>
+          Password:
+          <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required />
+        </label>
+        <br />
+        <button type="submit" className="login-button">Log In</button>
+      </form>
+    </div>
   );
 }
 
