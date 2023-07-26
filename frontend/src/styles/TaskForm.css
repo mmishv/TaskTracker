@@ -1,0 +1,26 @@
+.task-form-container {
+  width: 20%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-right: 20px;
+  box-sizing: border-box;
+}
+
+.task-form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-form-container label {
+  margin-bottom: 8px;
+}
+
+.task-form-container input {
+  padding: 8px;
+  margin-bottom: 16px;
+}
+
+.task-form-container button {
+  padding: 8px;
+}

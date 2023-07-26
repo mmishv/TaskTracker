@@ -1,0 +1,26 @@
+.tasklist-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.create-form {
+  width: 20%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.task-container {
+  width: 78%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.task-card {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
