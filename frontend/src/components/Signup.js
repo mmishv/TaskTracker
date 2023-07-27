@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from '../axios';
 import '../styles/Login.css';
+
 
 function Signup() {
   const [email, setEmail] = useState('');
@@ -25,6 +26,7 @@ function Signup() {
       });
 
       console.log(response.data);
+      window.location.href = '/tasks';
     } catch (error) {
       console.error(error.response.data);
     }

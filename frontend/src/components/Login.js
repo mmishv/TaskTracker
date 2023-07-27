@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from '../axios';
 import '../styles/Login.css';
 
 function Login() {
@@ -7,23 +8,21 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await fetch('/auth/login/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email, password })
-    });
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-    } else {
-      const error = await response.json();
-      console.error(error);
+
+    try {
+      const response = await axios.post('/auth/login/', {
+        email,
+        password,
+      });
+
+      console.log(response.data);
+      window.location.href = '/tasks';
+    } catch (error) {
+      console.error(error.response.data);
     }
   };
 
-return (
+  return (
     <div className="login-container">
       <form onSubmit={handleSubmit}>
         <label>
