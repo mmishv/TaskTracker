@@ -55,6 +55,6 @@ def signup_view(request):
         user = User.objects.create_user(email=data['email'], password=data['password'],
                                         first_name=data['first_name'], last_name=data['last_name'])
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
