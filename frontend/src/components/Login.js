@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from '../axios';
 import '../styles/Login.css';
 
-function Login() {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -14,6 +14,8 @@ function Login() {
         email,
         password,
       });
+
+      localStorage.setItem('access_token',  JSON.stringify(response.data) );
 
       console.log(response.data);
       window.location.href = '/tasks';
