@@ -1,10 +1,26 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from rest_framework import status
 from .serializers import UserSerializer
 from django.contrib.auth import get_user_model
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate
+
+
+class ObtainTokenView(APIView):
+    def post(self, request):
+        email = request.data.get('email')
+        password = request.data.get('password')
+        user = authenticate(request, email=email, password=password)
+        if user:
+            refresh = RefreshToken.for_user(user)
+            access_token = str(refresh.access_token)
+            return Response({'access_token': access_token})
+        else:
+            return Response({'error': 'Invalid credentials'}, status=400)
 
 
 @api_view(['POST'])
