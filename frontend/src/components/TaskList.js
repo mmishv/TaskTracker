@@ -10,7 +10,7 @@ const TaskList = () => {
   const [description, setDescription] = useState('');
 
   useEffect(() => {
-    axios.get('/api/tasks/')
+    axios.get(`/api/users/${getCurrentUserFromToken().id}/tasks/`)
       .then(response => {
         setTasks(response.data);
       })
