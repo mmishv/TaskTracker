@@ -3,12 +3,20 @@ import {Link} from 'react-router-dom';
 import '../styles/HomePage.css';
 
 const HomePage = () => {
+    const isAuthenticated = localStorage.getItem('access_token');
+
     return (
         <div className="page-container">
             <div className="home-page">
                 <div className="nav-links">
-                    <Link to="/login">Login</Link>
-                    <Link to="/signup">Signup</Link>
+                    {isAuthenticated ? (
+                        <Link to="/tasks">Tasks</Link>
+                    ) : (
+                        <>
+                            <Link to="/login">Login</Link>
+                            <Link to="/signup">Signup</Link>
+                        </>
+                    )}
                 </div>
                 <h1 className="welcome-heading">Welcome to Task Tracker</h1>
                 <p className="description">
