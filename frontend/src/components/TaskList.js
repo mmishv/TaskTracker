@@ -68,46 +68,92 @@ const TaskList = () => {
             console.error('Error logging out:', error);
         }
     };
+    const handleToggleTaskStatus = async (taskId) => {
+        try {
+            const token = localStorage.getItem('access_token');
+            if (!token) {
+                console.error('Authentication token missing');
+                return;
+            }
+
+            const headers = {
+                'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json',
+            };
+
+            const taskToUpdate = tasks.find(task => task.id === taskId);
+            if (!taskToUpdate) {
+                console.error('Task not found');
+                return;
+            }
+
+            const updatedTask = {
+                ...taskToUpdate, is_done: !taskToUpdate.is_done,
+            };
+
+            await axios.put(`/api/tasks/${taskId}/`, updatedTask, {headers});
+            setTasks(tasks.map(task => task.id === taskId ? updatedTask : task));
+            console.log('Task status updated successfully!');
+        } catch (error) {
+            console.error('Error updating task status:', error.response.data);
+        }
+    };
 
     return (<div className="home-page-container">
-            <div style={{display: "inline"}}>
-                <Link to="/" className="home-button">Home</Link>
-                <Link to="#" className="home-button" onClick={handleLogout}>Logout</Link>
+        <div style={{display: "inline"}}>
+            <Link to="/" className="home-button">Home</Link>
+            <Link to="#" className="home-button" onClick={handleLogout}>Logout</Link>
+        </div>
+        <div className="tasklist-container">
+            <div className="create-form">
+                <h2>Create New Task</h2>
+                <input
+                    type="text"
+                    placeholder="Title"
+                    value={title}
+                    onChange={e => setTitle(e.target.value)}
+                />
+                <br/>
+                <input
+                    type="text"
+                    placeholder="Description"
+                    value={description}
+                    onChange={e => setDescription(e.target.value)}
+                />
+                <br/>
+                <button onClick={handleCreateTask}>Create</button>
             </div>
-            <div className="tasklist-container">
-                <div className="create-form">
-                    <h2>Create New Task</h2>
-                    <input
-                        type="text"
-                        placeholder="Title"
-                        value={title}
-                        onChange={e => setTitle(e.target.value)}
-                    />
-                    <br/>
-                    <input
-                        type="text"
-                        placeholder="Description"
-                        value={description}
-                        onChange={e => setDescription(e.target.value)}
-                    />
-                    <br/>
-                    <button onClick={handleCreateTask}>Create</button>
-                </div>
-                <div className="task-container">
-                    {tasks.map(task => (<div className="task-card" key={task.id}>
-                            <h3 className="task-title">{task.title}</h3>
-                            <p className="task-description">{task.description}</p>
-                            <div className="button-container">
-                                <button className="view-button"
-                                        onClick={() => window.location.href = `/tasks/${task.id}`}>View
-                                </button>
-                                <button className="delete-button" onClick={() => handleDeleteTask(task.id)}>Delete
-                                </button>
-                            </div>
-                        </div>))}
-                </div>
+            <div className="task-container">
+                {tasks.map(task => (<div
+                    className={`task-card ${task.is_done ? 'task-done' : ''}`}
+                    key={task.id}
+                >
+                    <h3 className="task-title">{task.title}</h3>
+                    <p className="task-description">{task.description}</p>
+                    <div className="button-container">
+                        <button
+                            className="view-button"
+                            onClick={() => window.location.href = `/tasks/${task.id}`}
+                        >
+                            View
+                        </button>
+                        <button
+                            className="delete-button"
+                            onClick={() => handleDeleteTask(task.id)}
+                        >
+                            Delete
+                        </button>
+                        <button
+                            className={`toggle-button ${task.is_done ? 'done' : ''}`}
+                            onClick={() => handleToggleTaskStatus(task.id)}
+                        >
+                            ✓
+                        </button>
+                    </div>
+                </div>))}
+
             </div>
-        </div>);
+        </div>
+    </div>);
 };
 
 export default TaskList;
