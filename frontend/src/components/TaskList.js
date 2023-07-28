@@ -19,14 +19,6 @@ const TaskList = () => {
             });
     }, []);
 
-    function getCurrentUserFromToken() {
-        const token = localStorage.getItem('access_token');
-        if (!token) {
-            return null;
-        }
-        return JSON.parse(token);
-    }
-
     const handleCreateTask = async () => {
         try {
             const currentUser = getCurrentUserFromToken();
@@ -42,14 +34,11 @@ const TaskList = () => {
             }
 
             const headers = {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json',
             };
 
             const data = {
-                title,
-                description,
-                user: currentUser.id,
+                title, description, user: currentUser.id,
             };
 
             await axios.post('/api/tasks/', data, {headers});
@@ -80,8 +69,7 @@ const TaskList = () => {
         }
     };
 
-    return (
-        <div className="home-page-container">
+    return (<div className="home-page-container">
             <div style={{display: "inline"}}>
                 <Link to="/" className="home-button">Home</Link>
                 <Link to="#" className="home-button" onClick={handleLogout}>Logout</Link>
@@ -106,8 +94,7 @@ const TaskList = () => {
                     <button onClick={handleCreateTask}>Create</button>
                 </div>
                 <div className="task-container">
-                    {tasks.map(task => (
-                        <div className="task-card" key={task.id}>
+                    {tasks.map(task => (<div className="task-card" key={task.id}>
                             <h3 className="task-title">{task.title}</h3>
                             <p className="task-description">{task.description}</p>
                             <div className="button-container">
@@ -117,12 +104,18 @@ const TaskList = () => {
                                 <button className="delete-button" onClick={() => handleDeleteTask(task.id)}>Delete
                                 </button>
                             </div>
-                        </div>
-                    ))}
+                        </div>))}
                 </div>
             </div>
-        </div>
-    );
+        </div>);
 };
 
 export default TaskList;
+
+export function getCurrentUserFromToken() {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+        return null;
+    }
+    return JSON.parse(token);
+}

@@ -37,7 +37,7 @@
   margin-top: 20px;
 }
 
-.delete-button, .view-button {
+.delete-button, .view-button, .update-button {
   color: #dc3545;
   background-color: white;
   border: none;
@@ -47,4 +47,8 @@
 
 .view-button {
   color: #007bff;
+}
+
+.update-button {
+  color: #2ac405;
 }
