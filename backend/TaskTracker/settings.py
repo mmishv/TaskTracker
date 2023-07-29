@@ -11,9 +11,13 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(os.path.join(BASE_DIR.parent, '.env.dev'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -24,7 +28,7 @@ SECRET_KEY = 'django-insecure-p&65@!^nqicbj+b_i=^_se_h2g2n+q-wo+6zez!#5j-0iv@j7z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['web']
 
 # Application definition
 
@@ -106,14 +110,14 @@ DJONGO_ALLOW_SCHEMA_CONFLICT = True
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'tasktrackerdb',
+        'NAME': os.environ.get('MONGO_DB_NAME'),
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': 'localhost',
-            'port': 27017,
-            'username': 'admin',
-            'password': '1111',
-            'authMechanism': 'SCRAM-SHA-1',
+            'host': os.environ.get('MONGO_DB_HOST'),
+            'port': int(os.environ.get('MONGO_DB_PORT')),
+            'username': os.environ.get('MONGO_DB_USERNAME'),
+            'password': os.environ.get('MONGO_DB_PASSWORD'),
+            'authMechanism': os.environ.get('MONGO_DB_AUTH_MECHANISM'),
         }
     }
 }

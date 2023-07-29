@@ -1,11 +1,11 @@
-from utils import get_db_handle
+import os
+from dotenv import load_dotenv
 
-# Параметры подключения к MongoDB
-db_name = 'my_mongodb_database'
-host = 'localhost'
-port = 27017
-username = 'your_username'
-password = 'your_password'
+load_dotenv('../.env.dev')
 
-# Получаем объекты для работы с базой данных и клиентом
-db_handle, client = get_db_handle(db_name, host, port, username, password)
+print(os.getenv('MONGO_DB_NAME'))
+print(os.getenv('MONGO_DB_HOST'))
+print(os.getenv('MONGO_DB_PORT'))
+print(os.getenv('MONGO_DB_USERNAME'))
+print(os.getenv('MONGO_DB_PASSWORD'))
+print(os.getenv('MONGO_DB_AUTH_MECHANISM'))

@@ -1,0 +1,38 @@
+version: '3'
+services:
+  web:
+    container_name: web
+    build: ./backend/
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - MONGO_DB_HOST=mongodb
+      - MONGO_DB_PORT=27017
+    depends_on:
+      - mongodb
+    env_file:
+      - ./.env.dev
+  frontend:
+    container_name: reactapp
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/public/:/usr/src/app/public/
+      - ./frontend/src/:/usr/src/app/src/
+    command: npm start
+    depends_on:
+      - web
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=1111
+      - MONGO_DB_AUTH_MECHANISM=SCRAM-SHA-1
+volumes:
+  mongodb_data:
